@@ -61,7 +61,9 @@ def build(theme, out):
     d.text((x0 + 118, 104), "RogerAI", font=ImageFont.truetype(F + "SpaceGrotesk-Bold.ttf", 108), fill=t["ink"])
     d.text((x0 + 2, 248), "A two-way radio for GPUs.",
            font=ImageFont.truetype(F + "SpaceGrotesk-Medium.ttf", 44), fill=t["sub"])
-    im.save(out, optimize=True)
+    # The committed banners are 256-colour palette PNGs (about a third of the size); the same
+    # quantize keeps a rebuild byte-for-byte comparable.
+    im.quantize(colors=256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.FLOYDSTEINBERG).save(out, optimize=True)
 
 
 if __name__ == "__main__":
